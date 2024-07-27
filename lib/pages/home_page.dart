@@ -8,15 +8,16 @@ class HomePage extends StatelessWidget {
     const int days = 30;
     const String name = "Codepur";
     return Scaffold(
-        appBar:AppBar(
-          title: const Text("Catalog App")
+      appBar: AppBar(
+        title: const Text("Catalog App"),
+        backgroundColor: Colors.deepPurple,
+      ),
+      body: Center(
+        child: Container(
+          child: const Text("Welcome, to $days of flutter by $name"),
         ),
-        body: Center(
-          child: Container(
-            child: const Text("Welcome, to $days of flutter by $name"),
-          ),
-        ),
-        drawer: const Drawer(),
-      );
+      ),
+      drawer: const Drawer(),
+    );
   }
 }
