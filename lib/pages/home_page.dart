@@ -9,7 +9,11 @@ class HomePage extends StatelessWidget {
     const String name = "Codepur";
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Catalog App"),
+        title: const Text(
+          "Catalog App",
+        ),
+        titleTextStyle: TextStyle(
+            color: Colors.white, fontSize: 25, fontWeight: FontWeight.bold),
         backgroundColor: Colors.deepPurple,
       ),
       body: Center(

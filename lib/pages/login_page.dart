@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_application_1/home_page.dart';
 import 'package:flutter_application_1/utils/routes.dart';
 
@@ -14,87 +13,106 @@ class _LoginPageState extends State<LoginPage> {
   String name = "";
   bool changedButton = false;
 
+  final _formKey = GlobalKey<FormState>();
+
+  moveToHome(BuildContext context) async {
+    if (_formKey.currentState?.validate() ?? false) {
+      setState(() {
+        changedButton = true;
+      });
+      await Future.delayed(Duration(milliseconds: 900));
+      await Navigator.pushNamed(context, MyRoutes.homeRoute);
+      setState(() {
+        changedButton = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Material(
       color: Colors.white,
       child: Center(
         child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                "assets/images/loved_it.png",
-                height: 300,
-                fit: BoxFit.cover,
-              ),
-              const SizedBox(height: 20), // Add spacing between image and text
-              Text(
-                "Welcome! $name",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              Column(
-                children: [
-                  TextFormField(
-                    decoration: const InputDecoration(
-                      hintText: "Enter username",
-                      labelText: "Username",
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  "assets/images/loved_it.png",
+                  height: 300,
+                  fit: BoxFit.cover,
+                ),
+                const SizedBox(
+                    height: 20), // Add spacing between image and text
+                Text(
+                  "Welcome! $name",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                Column(
+                  children: [
+                    TextFormField(
+                      decoration: const InputDecoration(
+                        hintText: "Enter username",
+                        labelText: "Username",
+                      ),
+                      onChanged: (value) {
+                        name = value;
+                        setState(() {});
+                      },
+                      validator: (value) {
+                        if (value?.isEmpty ?? false) {
+                          return "Username can't be empty.";
+                        }
+                        return null;
+                      },
                     ),
-                    onChanged: (value) {
-                      name = value;
-                      setState(() {});
-                    },
-                  ),
-                  TextFormField(
-                    obscureText: true,
-                    decoration: const InputDecoration(
-                      hintText: "Enter password",
-                      labelText: "Password",
-                    ),
-                  )
-                ],
-              ),
-              SizedBox(
-                height: 20.0,
-              ),
-              InkWell(
-                  onTap: () async {
-                    setState(() {
-                      changedButton = true;
-                    });
-                    await Future.delayed(Duration(microseconds: 900));
-                    Navigator.pushNamed(context, MyRoutes.homeRoute);
-                  },
-                  child: AnimatedContainer(
-                    duration: Duration(seconds: 1),
-                    width: 80,
-                    height: 35,
-                    alignment: Alignment.center,
-                    child: changedButton
-                        ? Icon(Icons.done)
-                        : Text(
-                            "Login",
-                            style: TextStyle(
+                    TextFormField(
+                      obscureText: true,
+                      decoration: const InputDecoration(
+                        hintText: "Enter password",
+                        labelText: "Password",
+                      ),
+                      validator: (value) {
+                        if (value?.isEmpty ?? false) {
+                          return "Password can't be empty.";
+                        } else if ((value?.length ?? 0) < 8) {
+                          return "Password length should be at least 8 characters.";
+                        }
+                        return null;
+                      },
+                    )
+                  ],
+                ),
+                SizedBox(
+                  height: 20.0,
+                ),
+                Material(
+                  color: Colors.deepPurple,
+                  borderRadius: BorderRadius.circular(changedButton ? 50 : 8),
+                  child: InkWell(
+                    onTap: () => moveToHome(context),
+                    child: AnimatedContainer(
+                      duration: Duration(seconds: 1),
+                      width: changedButton ? 50 : 80,
+                      height: 35,
+                      alignment: Alignment.center,
+                      child: changedButton
+                          ? Icon(Icons.done, color: Colors.white)
+                          : Text(
+                              "Login",
+                              style: TextStyle(
                                 fontSize: 16,
-                                color:
-                                    changedButton ? Colors.black : Colors.white,
-                                fontWeight: FontWeight.bold),
-                          ),
-                    decoration: BoxDecoration(
-                      color: changedButton
-                          ? Colors.blueGrey
-                          : Color.fromARGB(255, 179, 72, 198),
-                      borderRadius: BorderRadius.circular(12),
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                     ),
-                  ))
-              // ElevatedButton(
-              //   onPressed: () {
-              //     Navigator.pushNamed(context, MyRoutes.homeRoute);
-              //   },
-              //   child: const Text("Login"),
-              //   style: TextButton.styleFrom(minimumSize: Size(30, 30)),
-              // )
-            ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
