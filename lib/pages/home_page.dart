@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, avoid_unnecessary_containers
+
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/widgets/drawer.dart';
 
@@ -14,8 +16,8 @@ class HomePage extends StatelessWidget {
           "Catalog App",
         ),
         titleTextStyle: TextStyle(
-            color: Colors.white, fontSize: 25, fontWeight: FontWeight.bold),
-        backgroundColor: Colors.deepPurple,
+            color: Colors.black, fontSize: 25, fontWeight: FontWeight.bold),
+        backgroundColor: Colors.white,
       ),
       body: Center(
         child: Container(
