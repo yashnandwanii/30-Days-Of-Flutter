@@ -1,5 +1,5 @@
 class CatalogModel {
-  static final products = [
+  static  List<Item> products = [
     Item(
         id: 1,
         name: "Iphone 12Pro",
@@ -26,4 +26,23 @@ class Item {
       required this.price,
       required this.color,
       required this.image});
+  
+  static fromMap(Map<String, dynamic> map){// map to class conversion
+    Item(
+      id: map["id"],
+      name: map["name"],
+      description: map["description"], 
+      price: map["price"],
+      color: map["color"], 
+      image: map["image"]);
+  }
+  toMap()=>{// class to map conversion
+    "id": id,
+    "name": name,
+    "description": description,
+    "price": price,
+    "color": color,
+    "image": image,
+
+  };
 }
